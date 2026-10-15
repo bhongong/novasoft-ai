@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'bhongong@gmail.com' ||
+        request.auth.token.email == 'calixto.ongii@gmail.com'
+      );
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated();
+      allow write: if isOwner(userId) || isAdmin();
+    }
+
+    // NPC roster records and assigned 3D models:
+    // Anyone can read NPC profiles (for org chart, 3D avatars, chat)
+    // Only verified Admins can create, update, or delete NPC records
+    match /npc_records/{npcId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Default catch-all denies unlisted access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "NovaSoft AI Virtual Software Company",
+  "description": "An interactive virtual AI-powered software company with corporate landing page, org chart, real-time voice avatar customer care, simulated BA interview, team Google Meet, and a 2D top-view live office dashboard.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

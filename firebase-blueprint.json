@@ -1,0 +1,107 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with role-based access control",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "description": "User email address"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "client"],
+          "description": "User role: admin for designated administrators, client for general users"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "Profile picture URL"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation ISO timestamp"
+        }
+      },
+      "required": ["email", "role"]
+    },
+    "NpcRecord": {
+      "title": "NpcRecord",
+      "description": "Autonomous AI / NPC team member record with assigned 3D GLB model and persona specifications",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique NPC member ID (e.g. orchestrator, ba, architect)"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the NPC"
+        },
+        "role": {
+          "type": "string",
+          "description": "Role title"
+        },
+        "department": {
+          "type": "string",
+          "description": "Department or squad domain"
+        },
+        "bio": {
+          "type": "string",
+          "description": "Biography and capabilities description"
+        },
+        "neuralModel": {
+          "type": "string",
+          "description": "Underlying AI model or human leadership"
+        },
+        "voiceName": {
+          "type": "string",
+          "description": "Gemini TTS voice persona (Kore, Fenrir, Charon, Zephyr, Puck)"
+        },
+        "specialties": {
+          "type": "array",
+          "description": "List of core engineering specialties"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "description": "2D fallback portrait URL"
+        },
+        "glbModelData": {
+          "type": "string",
+          "description": "Base64 or data URL of uploaded 3D GLB model asset"
+        },
+        "glbModelName": {
+          "type": "string",
+          "description": "Filename of assigned GLB model"
+        },
+        "presetModelType": {
+          "type": "string",
+          "description": "Procedural 3D model archetype if no custom GLB is uploaded"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last modified timestamp"
+        },
+        "updatedBy": {
+          "type": "string",
+          "description": "Email of admin who last updated the NPC"
+        }
+      },
+      "required": ["id", "name", "role", "department"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User account documents keyed by user UID"
+    },
+    "/npc_records/{npcId}": {
+      "schema": "NpcRecord",
+      "description": "NPC records and 3D avatar configuration documents keyed by NPC ID"
+    }
+  }
+}
